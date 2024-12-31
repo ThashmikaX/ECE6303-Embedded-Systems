@@ -1,11 +1,10 @@
-MPASM  5.14                      UNTITLED.ASM   12-30-2024  14:31:55         PAGE  1
+MPASM  5.14                         PROG2.ASM   12-31-2024  20:59:07         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-Warning[205]: Found directive in column 1. (list)
-                      00001 list        p=16f84a            ; Target microcontroller
+                      00001     list        p=16f84a            ; Target microcontroller
                       00002     include     "P16F84A.INC"       ; Include PIC16F84A definitions
                       00001         LIST
                       00002 ; P16F84A.INC  Standard Header File, Version 2.00    Microchip Technology, Inc.
@@ -23,19 +22,19 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0003   1283           00012     bcf         STATUS, RP0         ; Select Bank 0
                       00013 
 0004                  00014 start:
-0004   3000           00015     movlw       0x00                ; Turn off all LEDs
-0005   0085           00016     movwf       PORTA               ; Write to PORTA
-0006   1805           00017     btfsc       PORTA, 0            ; Check if RA0 is high (switch pressed)
-0007   2809           00018     goto        on                  ; If pressed, jump to "on"
-0008   2804           00019     goto        start               ; Loop back to "start"
+0004   3000           00015     movlw       0x00                ; Turn off all pins of PORTA
+0005   0085           00016     movwf       PORTA               ; Write 0 to PORTA
+0006   1805           00017     btfsc       PORTA, 0            ; Check if bit 0 of PORTA is high
+0007   2809           00018     goto        ledon               ; If high, jump to 'ledon'
+0008   2804           00019     goto        start               ; Otherwise, loop back to 'start'
                       00020 
-0009                  00021 on:
-0009   3002           00022     movlw       0x02                ; Turn on LED at RA1
+0009                  00021 ledon:
+0009   3002           00022     movlw       0x02                ; Set bit 1 of PORTA (turn on LED)
 000A   0085           00023     movwf       PORTA               ; Write to PORTA
-000B   2804           00024     goto        start               ; Loop back to "start"
+000B   2804           00024     goto        start               ; Return to main loop
                       00025 
                       00026     end                             ; End of program
-MPASM  5.14                      UNTITLED.ASM   12-30-2024  14:31:55         PAGE  2
+MPASM  5.14                         PROG2.ASM   12-31-2024  20:59:07         PAGE  2
 
 
 SYMBOL TABLE
@@ -94,7 +93,7 @@ _HS_OSC                           00003FFE
 _LP_OSC                           00003FFC
 _PWRTE_OFF                        00003FFF
 _PWRTE_ON                         00003FF7
-MPASM  5.14                      UNTITLED.ASM   12-30-2024  14:31:55         PAGE  3
+MPASM  5.14                         PROG2.ASM   12-31-2024  20:59:07         PAGE  3
 
 
 SYMBOL TABLE
@@ -105,7 +104,7 @@ _WDT_OFF                          00003FFB
 _WDT_ON                           00003FFF
 _XT_OSC                           00003FFD
 __16F84A                          00000001
-on                                00000009
+ledon                             00000009
 start                             00000004
 
 
@@ -121,7 +120,8 @@ Program Memory Words Free:  1012
 
 
 Errors   :     0
-Warnings :     1 reported,     0 suppressed
+Warnings :     0 reported,     0 suppressed
 Messages :     1 reported,     0 suppressed
 
-
+Error[173]  : Source file path exceeds 62 characters (D:\X\PROJECT\PROGRAMMING_PROJECTS\ACADEMIC\EMBEDDED-SYSTEMS\CA\INCLASS-2\PROGR
+                            AM\PROG2.ASM)
