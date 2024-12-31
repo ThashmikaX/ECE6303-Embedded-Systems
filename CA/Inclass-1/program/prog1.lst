@@ -1,0 +1,126 @@
+MPASM  5.14                         PROG1.ASM   12-31-2024  21:04:19         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001     list        p=16f84a            ; Target microcontroller
+                      00002     include     "P16F84A.INC"       ; Include PIC16F84A definitions
+                      00001         LIST
+                      00002 ; P16F84A.INC  Standard Header File, Version 2.00    Microchip Technology, Inc.
+                      00134         LIST
+                      00003 
+2007   3FF1           00004     __config    _XT_OSC & _WDT_OFF & _PWRTE_ON ; Configuration bits
+                      00005 
+0000                  00006     org         0x00                ; Program start address
+                      00007 
+                      00008 ; Initialize PORTA
+0000   1683           00009     bsf         STATUS, RP0         ; Select Bank 1
+0001   3000           00010     movlw       0x00                ; Set all pins of PORTA as output
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0002   0085           00011     movwf       TRISA               ; Write to TRISA register
+0003   1283           00012     bcf         STATUS, RP0         ; Select Bank 0
+                      00013 
+0004                  00014 start:
+0004   3000           00015     movlw       0x00                ; Turn off all pins of PORTA
+0005   0085           00016     movwf       PORTA               ; Write 0 to PORTA
+0006   1805           00017     btfsc       PORTA, 0            ; Check if bit 0 of PORTA is high
+0007   2809           00018     goto        ledon               ; If high, jump to 'ledon'
+0008   2804           00019     goto        start               ; Otherwise, loop back to 'start'
+                      00020 
+0009                  00021 ledon:
+0009   3002           00022     movlw       0x02                ; Set bit 1 of PORTA (turn on LED)
+000A   0085           00023     movwf       PORTA               ; Write to PORTA
+000B   2804           00024     goto        start               ; Return to main loop
+                      00025 
+                      00026     end                             ; End of program
+MPASM  5.14                         PROG1.ASM   12-31-2024  21:04:19         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+C                                 00000000
+DC                                00000001
+EEADR                             00000009
+EECON1                            00000088
+EECON2                            00000089
+EEDATA                            00000008
+EEIE                              00000006
+EEIF                              00000004
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+NOT_PD                            00000003
+NOT_RBPU                          00000007
+NOT_TO                            00000004
+OPTION_REG                        00000081
+PCL                               00000002
+PCLATH                            0000000A
+PORTA                             00000005
+PORTB                             00000006
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RBIE                              00000003
+RBIF                              00000000
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+STATUS                            00000003
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+TMR0                              00000001
+TRISA                             00000085
+TRISB                             00000086
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_CP_OFF                           00003FFF
+_CP_ON                            0000000F
+_HS_OSC                           00003FFE
+_LP_OSC                           00003FFC
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+MPASM  5.14                         PROG1.ASM   12-31-2024  21:04:19         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_RC_OSC                           00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FFD
+__16F84A                          00000001
+ledon                             00000009
+start                             00000004
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXX---- ---------------- ---------------- ----------------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    12
+Program Memory Words Free:  1012
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     1 reported,     0 suppressed
+
+
